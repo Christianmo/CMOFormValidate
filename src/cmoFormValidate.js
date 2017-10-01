@@ -93,7 +93,7 @@ window.cmoFormValidate = (function() {
 
             fieldsArr.forEach(function(fieldObj) {
                 fieldObj.el.addEventListener('blur', function() {
-                    self.errorHandle(fieldObj.el, fieldObj.rule, fieldObj.errorMessage);
+                    self._errorHandle(fieldObj.el, fieldObj.rule, fieldObj.errorMessage);
                 });
             });
         },
@@ -109,7 +109,7 @@ window.cmoFormValidate = (function() {
             button.addEventListener('click', function(evt) {
 
                 fieldsArr.forEach(function(fieldObj) {
-                    self.errorHandle(fieldObj.el, fieldObj.rule, fieldObj.errorMessage);
+                    self._errorHandle(fieldObj.el, fieldObj.rule, fieldObj.errorMessage);
                 })
             });
         },
@@ -126,12 +126,12 @@ window.cmoFormValidate = (function() {
                 evt.preventDefault();
 
                 fields.forEach(function(fieldObj) {
-                    self.errorHandle(fieldObj.el, fieldObj.rule, fieldObj.errorMessage);
+                    self._errorHandle(fieldObj.el, fieldObj.rule, fieldObj.errorMessage);
                 });
             });
         },
 
-        errorHandle: function(field, rule, message) {
+        _errorHandle: function(field, rule, message) {
 
             var currentClass = field.className;
 
