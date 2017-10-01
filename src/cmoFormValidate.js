@@ -46,27 +46,36 @@ window.cmoFormValidate = (function() {
 
     var validate = {
 
-        init: function(options) {
+        init: function(data) {
 
-            options = options;
+            options = data;
 
-            if (!options.fields.length) {
-                return;
-            }
+            if ((typeof options) === 'string') {
+                var selector = options;
+                var form = document.querySelector(selector);
+                var button = form.querySelector("[data-action]");
+                var inputs = form.querySelectorAll("[data-rule]");
 
-            var form = document.querySelector(options.form);
-            var fields = options.fields;
-
-            this.blurHandle(form, fields);
-
-            if (options.button) {
-                var button = options.button;
-                this.clickHandle(form, fields, button); //for specific button
+                var fieldsArr = Array.prototype.map.call(inputs, function(input) {
+                    return { el: input, rule: input.dataset.rule, errorMessage: input.dataset.errorMessage };
+                });
             } else {
-                this.submitHandle(form, fields);
+                var form = document.querySelector(options.form);
+                var fields = options.fields;
+                var button = form.querySelector(options.button);
+
+                var fieldsArr = options.fields.map(function(fieldObj) {
+                    return { el: form.querySelector(fieldObj.selector), rule: fieldObj.rule, errorMessage: fieldObj.message };
+                });
             }
 
+            validate._blurHandle(fieldsArr);
 
+            if (button) {
+                validate._clickHandle(fieldsArr, button); //for specific button
+            } else {
+                validate._submitHandle(form, fieldsArr); //for submit event
+            }
         },
 
         isValid: function(selector) {
@@ -77,45 +86,30 @@ window.cmoFormValidate = (function() {
 
         /**
          * Validation when file is blur
-         * @param  {string} form   is the selector of the form
-         * @param  {array} fields is an array with the field selector, type of validation and error message
+         * @param  {[Array]} Array of Objects
          */
-        blurHandle: function(form, fields) {
+        _blurHandle: function(fieldsArr) {
             var self = this;
 
-            fields.forEach(function(field) {
-                var el = form.querySelector(field.selector);
-
-                if (el === null) {
-                    console.info('Warning: ' + field.selector + ' element does not exist');
-                    return;
-                }
-
-                el.addEventListener('blur', function() {
-                    self.errorHandle(form, field);
+            fieldsArr.forEach(function(fieldObj) {
+                fieldObj.el.addEventListener('blur', function() {
+                    self.errorHandle(fieldObj.el, fieldObj.rule, fieldObj.errorMessage);
                 });
             });
         },
 
         /**
          * Validation by button click, validation without submit
-         * @param  {[element]} form   current form or block with fields
-         * @param  {[type]} fields the fields to validate
-         * @param  {[type]} button the button to execute the validation
+         * @param  {[Array]} Array of Objects
+         * @param  {[el]} button el
          */
-        clickHandle: function(form, fields, button) {
+        _clickHandle: function(fieldsArr, button) {
             var self = this;
-            var button = form.querySelector(button);
-
-            if (!button) {
-                console.info('Warning: ' + button + ' submit element does not exist');
-                return;
-            }
 
             button.addEventListener('click', function(evt) {
 
-                fields.forEach(function(field) {
-                    self.errorHandle(form, field);
+                fieldsArr.forEach(function(fieldObj) {
+                    self.errorHandle(fieldObj.el, fieldObj.rule, fieldObj.errorMessage);
                 })
             });
         },
@@ -125,52 +119,40 @@ window.cmoFormValidate = (function() {
          * @param  {string} form   is the selector of the form
          * @param  {array} fields is an array with the field selector, type of validation and error message
          */
-        submitHandle: function(form, fields) {
+        _submitHandle: function(form, fieldsArr) {
             var self = this;
 
             form.addEventListener('submit', function(evt) {
                 evt.preventDefault();
 
-                fields.forEach(function(field) {
-                    self.errorHandle(form, field);
+                fields.forEach(function(fieldObj) {
+                    self.errorHandle(fieldObj.el, fieldObj.rule, fieldObj.errorMessage);
                 });
             });
         },
 
-        errorHandle: function(form, field) {
+        errorHandle: function(field, rule, message) {
 
-            var el = form.querySelector(field.selector);
-
-            if (el === null) {
-                console.info(el + ' element does not exist');
-                return;
-            }
-
-            if (!rules[field.rule]) {
-                console.info('Warning: ' + field.rule + ' rule does not exist');
-                return;
-            }
-
-            var currentClass = el.className;
+            var currentClass = field.className;
 
             var errorMsg = document.createElement('small');
             errorMsg.className = "error-message";
 
-            var parentNode = el.parentNode;
+            var parentNode = field.parentNode;
 
-            if (rules[field.rule](el.value)) {
-                el.className = currentClass.replace('field-error', '');
+            if (rules[rule](field.value)) {
+                field.className = currentClass.replace('field-error', '');
                 var currentErrorMsg = parentNode.querySelector('small');
-                if(currentErrorMsg) {
+                if (currentErrorMsg) {
                     parentNode.removeChild(parentNode.querySelector('small'));
-                    el.dataset.tooltip = '';
+                    field.dataset.tooltip = '';
                 }
             } else {
                 if (currentClass.indexOf('field-error') === -1) {
-                    el.className = currentClass + ' field-error';
-                    el.parentNode.appendChild(errorMsg);
-                    errorMsg.innerHTML = field.message;
-                    el.dataset.tooltip = field.message;
+                    field.className = currentClass + ' field-error';
+                    field.parentNode.appendChild(errorMsg);
+                    errorMsg.innerHTML = message;
+                    field.dataset.tooltip = message;
                 }
 
             }
@@ -178,5 +160,9 @@ window.cmoFormValidate = (function() {
         }
     };
 
-    return validate;
+    return {
+        init: validate.init,
+        isValid: validate.isValid
+    }
+
 })()
