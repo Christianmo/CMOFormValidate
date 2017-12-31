@@ -2,4 +2,4 @@
 
 Basic JS form validation library.
 
-For more details see [GitHub Flavored Markdown](https://christianmo.github.io/CMOFormValidate/).
+For more details see [the proyect website](https://christianmo.github.io/CMOFormValidate/).
