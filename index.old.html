@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css">
+  <style type="text/css">
+    body {
+      padding: 30px 0;
+      overflow: visible;
+    }
+
+    .field-error {
+      border: solid #ff3860 1px;
+    }
+    .error-message {
+      color: #ff3860;
+    }
+
+    .select {
+      height: auto;
+    }
+
+    .select:after {
+      top:20px;
+    }
+  </style>
+</head>
+<body>
+
+	<div class="container">
+    <h1 class="title is-1 has-text-centered">CMO Form Validate</h1>
+    <hr>
+    <h2 class="title is-3 has-text-centered">Simple JS setup</h2>
+		<div class="columns">
+			<div class="column is-half">
+				<code class="language-html" data-lang="html">
+          var rules = {
+            form: '.form1',
+            button: '.form__action',
+            fields: [
+              {
+                selector: '.form__names',
+                rule: 'required',
+                message: 'Name is required'
+              },
+
+              {
+                selector: '.form__email',
+                rule: 'email',
+                message: 'Valid Email is required'
+              },
+
+              {
+                selector: '.form__phone',
+                rule: 'numbers',
+                message: 'Phone is required'
+              },
+
+              {
+                selector: '.form__country',
+                rule: 'required',
+                message: 'Country is required'
+              },
+
+              {
+                selector: '.form__message',
+                rule: 'required',
+                message: 'Message is required'
+              }
+            ]
+          };
+
+          cmoFormValidate.init(rules);
+
+          var action1 = document.querySelector('.form__action');
+
+          action1.addEventListener('click', function(evt) {
+            if (!cmoFormValidate.isValid('.form1')) {
+              evt.preventDefault();
+            } else {
+              alert('Nice!')
+            }
+          });
+
+				</code>
+			</div>
+			<div class="column is-half">
+				<form class="form1">
+					<div class="field">
+					  <label>Name</label>
+					  <div class="control">
+					    <input type="text" class="form__names input">
+					  </div>
+					</div>
+					<div class="field">
+					  <label>Email</label>
+					  <div class="control">
+					    <input type="email" class="form__email input">
+					  </div>
+					</div>
+          <div class="field">
+            <label>Phone</label>
+            <div class="control">
+              <input type="text" class="form__phone input">
+            </div>
+          </div>
+          <div class="field">
+            <label>Countries</label>
+            <div class="control">
+              <div class="select">
+                <select class="form__country">
+                  <option value="">Select country</option>
+                  <option value="China">China</option>
+                  <option value="Peru">Peru</option>
+                  <option value="Rusia">Rusia</option>
+                  <option value="United states">United States</option>
+                </select>
+              </div>
+            </div>
+          </div>
+					<div class="field">
+					  <label>Message</label>
+					  <div class="control">
+					    <textarea class="form__message textarea"></textarea>
+					  </div>
+					</div>
+					<div class="field">
+					  <div class="control">
+					    <button type="submit" class="form__action button is-primary is-medium">Validate form</button>
+					  </div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+    <hr>
+    <h2 class="title is-3 has-text-centered">Using data-* option</h2>
+    <div class="columns">
+      <div class="column is-half">
+        <code class="language-html" data-lang="html">
+          cmoFormValidate.init('.form2');
+
+          var action2 = document.querySelector('[data-action]');
+
+          action2.addEventListener('click', function(evt) {
+            if (!cmoFormValidate.isValid('.form2')) {
+              evt.preventDefault();
+            } else {
+              alert('Nice!')
+            }
+          })
+        </code>
+      </div>
+      <div class="column is-half">
+        <form class="form2">
+          <div class="field">
+            <label>Name</label>
+            <div class="control">
+              <input type="text" data-rule="names" class="input">
+            </div>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <div class="control">
+              <input type="email" data-rule="email" class="input">
+            </div>
+          </div>
+          <div class="field">
+            <label>Phone</label>
+            <div class="control">
+              <input type="text" data-rule="numbers" class="input">
+            </div>
+          </div>
+          <div class="field">
+            <label>Countries</label>
+            <div class="control">
+              <div class="select">
+                <select data-rule="required">
+                  <option value="">Select country</option>
+                  <option value="China">China</option>
+                  <option value="Peru">Peru</option>
+                  <option value="Rusia">Rusia</option>
+                  <option value="United states">United States</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Message</label>
+            <div class="control">
+              <textarea class="textarea" data-rule="required"></textarea>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button type="submit" data-action="submit" class="button is-primary is-medium">Validate form</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+	</div>
+
+	<script type="text/javascript" src="src/cmoFormValidate.js"></script>
+	<script type="text/javascript">
+	var rules = {
+		form: '.form1',
+		button: '.form__action',
+		fields: [
+			{
+				selector: '.form__names',
+				rule: 'required',
+				message: 'Name is required'
+			},
+
+			{
+				selector: '.form__email',
+				rule: 'email',
+				message: 'Valid Email is required'
+			},
+
+      {
+        selector: '.form__phone',
+        rule: 'numbers',
+        message: 'Phone is required'
+      },
+
+      {
+        selector: '.form__country',
+        rule: 'required',
+        message: 'Country is required'
+      },
+
+      {
+        selector: '.form__message',
+        rule: 'required',
+        message: 'Message is required'
+      }
+		]
+	};
+
+  cmoFormValidate.init(rules);
+
+  var action1 = document.querySelector('.form__action');
+
+  action1.addEventListener('click', function(evt) {
+    if (!cmoFormValidate.isValid('.form1')) {
+      evt.preventDefault();
+    } else {
+      alert('Nice!')
+    }
+  });
+
+
+  /* With Data attributes */
+
+	cmoFormValidate.init('.form2');
+
+  var action2 = document.querySelector('[data-action]');
+
+  action2.addEventListener('click', function(evt) {
+    if (!cmoFormValidate.isValid('.form2')) {
+      evt.preventDefault();
+    } else {
+      alert('Nice!')
+    }
+  })
+
+	</script>
+</body>
+</html>
