@@ -57,7 +57,11 @@ window.cmoFormValidate = (function() {
                 var inputs = form.querySelectorAll("[data-rule]");
 
                 var fieldsArr = Array.prototype.map.call(inputs, function(input) {
-                    return { el: input, rule: input.dataset.rule, errorMessage: input.dataset.errorMessage };
+                    return {
+                        el: input,
+                        rule: input.dataset.rule,
+                        errorMessage: input.dataset.errorMessage
+                    };
                 });
             } else {
                 var form = document.querySelector(options.form);
@@ -65,7 +69,11 @@ window.cmoFormValidate = (function() {
                 var button = form.querySelector(options.button);
 
                 var fieldsArr = options.fields.map(function(fieldObj) {
-                    return { el: form.querySelector(fieldObj.selector), rule: fieldObj.rule, errorMessage: fieldObj.message };
+                    return {
+                        el: form.querySelector(fieldObj.selector),
+                        rule: fieldObj.rule,
+                        errorMessage: fieldObj.message
+                    };
                 });
             }
 
