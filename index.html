@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Basic validation JS Library">
+	<title>Basic validation JS Library</title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css">
 	<link rel="stylesheet" type="text/css" href="vendors/css/prism.css">
   <style type="text/css">
@@ -10,8 +12,12 @@
       overflow: visible;
     }
 
+    .container {
+      padding: 0 20px;
+    }
+
     pre code {
-      padding: 0;
+      padding-top: 0;
       max-height: 600px;
     }
 
@@ -35,60 +41,60 @@
 
 	<div class="container">
     <h1 class="title is-1 has-text-centered">CMO Form Validate</h1>
-    <p><a href="https://github.com/Christianmo/CMOFormValidate" class="button is-info is-medium">View on Github</a></p>
+    <p class=" has-text-centered"><a href="https://github.com/Christianmo/CMOFormValidate" class="button is-info is-medium">View on Github</a></p>
     <hr>
     <h2 class="title is-3 has-text-centered">Simple JS setup</h2>
 		<div class="columns">
 			<div class="column is-half">
 				<pre>
           <code class="language-javascript">
-          var rules = {
-            form: '.form1',
-            button: '.form__action',
-            fields: [
-              {
-                selector: '.form__names',
-                rule: 'required',
-                message: 'Name is required'
-              },
+var rules = {
+  form: '.form1',
+  button: '.form__action',
+  fields: [
+    {
+      selector: '.form__names',
+      rule: 'required',
+      message: 'Name is required'
+    },
 
-              {
-                selector: '.form__email',
-                rule: 'email',
-                message: 'Valid Email is required'
-              },
+    {
+      selector: '.form__email',
+      rule: 'email',
+      message: 'Valid Email is required'
+    },
 
-              {
-                selector: '.form__phone',
-                rule: 'numbers',
-                message: 'Phone is required'
-              },
+    {
+      selector: '.form__phone',
+      rule: 'numbers',
+      message: 'Phone is required'
+    },
 
-              {
-                selector: '.form__country',
-                rule: 'required',
-                message: 'Country is required'
-              },
+    {
+      selector: '.form__country',
+      rule: 'required',
+      message: 'Country is required'
+    },
 
-              {
-                selector: '.form__message',
-                rule: 'required',
-                message: 'Message is required'
-              }
-            ]
-          };
+    {
+      selector: '.form__message',
+      rule: 'required',
+      message: 'Message is required'
+    }
+  ]
+};
 
-          cmoFormValidate.init(rules);
+cmoFormValidate.init(rules);
 
-          var action1 = document.querySelector('.form__action');
+var action1 = document.querySelector('.form__action');
 
-          action1.addEventListener('click', function(evt) {
-            if (!cmoFormValidate.isValid('.form1')) {
-              evt.preventDefault();
-            } else {
-              alert('Nice!')
-            }
-          });
+action1.addEventListener('click', function(evt) {
+  if (!cmoFormValidate.isValid('.form1')) {
+    evt.preventDefault();
+  } else {
+    alert('Nice!')
+  }
+});
           </code>
 				</pre>
 			</div>
@@ -147,17 +153,17 @@
       <div class="column is-half">
         <pre>
         <code class="language-javascript">
-          cmoFormValidate.init('.form2');
+cmoFormValidate.init('.form2');
 
-          var action2 = document.querySelector('[data-action]');
+var action2 = document.querySelector('[data-action]');
 
-          action2.addEventListener('click', function(evt) {
-            if (!cmoFormValidate.isValid('.form2')) {
-              evt.preventDefault();
-            } else {
-              alert('Nice!')
-            }
-          })
+action2.addEventListener('click', function(evt) {
+  if (!cmoFormValidate.isValid('.form2')) {
+    evt.preventDefault();
+  } else {
+    alert('Nice!')
+  }
+})
         </code>
         </pre>
       </div>
