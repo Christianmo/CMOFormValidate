@@ -40,6 +40,15 @@
       display: inline-block;
       margin: 5px;
     }
+
+    .number {
+      vertical-align: initial;
+      font-size: inherit;
+      min-width: none;
+      margin: 0;
+      padding: 0;
+      display: inline;
+    }
   </style>
 </head>
 <body>
@@ -102,6 +111,14 @@ action1.addEventListener('click', function(evt) {
 });
           </code>
 				</pre>
+        <p>If you need a custom rule (cellphone for example), you can write your own code and use the basic validations if you need. Place this before the rules object.</p>
+        <pre>
+          <code class="language-javascript">
+cmoFormValidate.rules.cellPhone = function(val) {
+    return (val.length > 6 && val.length < 10) && cmoFormValidate.rules.numbers(val)
+}
+          </code>
+        </pre>
 			</div>
 			<div class="column is-half">
 				<form class="form1">

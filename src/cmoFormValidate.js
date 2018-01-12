@@ -170,7 +170,8 @@ window.cmoFormValidate = (function() {
 
     return {
         init: validate.init,
-        isValid: validate.isValid
+        isValid: validate.isValid,
+        rules: rules
     }
 
 })()
