@@ -50,22 +50,8 @@ window.cmoFormValidate = (function() {
 
             options = data;
 
-            if ((typeof options) === 'string') {
-                var selector = options;
-                var form = document.querySelector(selector);
-                var button = form.querySelector("[data-action]");
-                var inputs = form.querySelectorAll("[data-rule]");
-
-                var fieldsArr = Array.prototype.map.call(inputs, function(input) {
-                    return {
-                        el: input,
-                        rule: input.dataset.rule,
-                        errorMessage: input.dataset.errorMessage
-                    };
-                });
-            } else {
+            if (options.fields) {
                 var form = document.querySelector(options.form);
-                var fields = options.fields;
                 var button = form.querySelector(options.button);
 
                 var fieldsArr = options.fields.map(function(fieldObj) {
@@ -73,6 +59,19 @@ window.cmoFormValidate = (function() {
                         el: form.querySelector(fieldObj.selector),
                         rule: fieldObj.rule,
                         errorMessage: fieldObj.message
+                    };
+                });
+            } else {
+                var selector = options;
+                var form = document.querySelector(options.form);
+                var button = form.querySelector(options.button);
+                var inputs = form.querySelectorAll("[data-rule]");
+
+                var fieldsArr = Array.prototype.map.call(inputs, function(input) {
+                    return {
+                        el: input,
+                        rule: input.dataset.rule,
+                        errorMessage: input.dataset.errorMessage
                     };
                 });
             }
@@ -162,9 +161,7 @@ window.cmoFormValidate = (function() {
                     errorMsg.innerHTML = message;
                     field.dataset.tooltip = message;
                 }
-
             }
-
         }
     };
 

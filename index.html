@@ -62,7 +62,7 @@
 			<div class="column is-half">
 				<pre>
           <code class="language-javascript">
-var rules = {
+var options1 = {
   form: '.form1',
   button: '.form__action',
   fields: [
@@ -98,9 +98,9 @@ var rules = {
   ]
 };
 
-cmoFormValidate.init(rules);
+cmoFormValidate.init(options1);
 
-var action1 = document.querySelector('.form__action');
+var action1 = document.querySelector('.form1 .form__action');
 
 action1.addEventListener('click', function(evt) {
   if (!cmoFormValidate.isValid('.form1')) {
@@ -111,14 +111,6 @@ action1.addEventListener('click', function(evt) {
 });
           </code>
 				</pre>
-        <p>If you need a custom rule (cellphone for example), you can write your own code and use the basic validations if you need. Place this before the rules object.</p>
-        <pre>
-          <code class="language-javascript">
-cmoFormValidate.rules.cellPhone = function(val) {
-    return (val.length > 6 && val.length < 10) && cmoFormValidate.rules.numbers(val)
-}
-          </code>
-        </pre>
 			</div>
 			<div class="column is-half">
 				<form class="form1">
@@ -173,11 +165,22 @@ cmoFormValidate.rules.cellPhone = function(val) {
     <h2 class="title is-3 has-text-centered">Using data-* option</h2>
     <div class="columns">
       <div class="column is-half">
+        <p>The rules are placed with data attributes</p>
+        <pre class="language-html">
+          <code class="language-html">
+< input type="email" data-rule="email" data-error-message="Valid Email is required" class="input">
+          </code>
+        </pre>
         <pre>
-        <code class="language-javascript">
-cmoFormValidate.init('.form2');
+          <code class="language-javascript">
+var options2 = {
+  form: '.form2',
+  button: '.form__action',
+};
 
-var action2 = document.querySelector('[data-action]');
+cmoFormValidate.init(options2);
+
+var action2 = document.querySelector('.form2 .form__action');
 
 action2.addEventListener('click', function(evt) {
   if (!cmoFormValidate.isValid('.form2')) {
@@ -186,7 +189,7 @@ action2.addEventListener('click', function(evt) {
     alert('Nice!')
   }
 })
-        </code>
+          </code>
         </pre>
       </div>
       <div class="column is-half">
@@ -194,26 +197,26 @@ action2.addEventListener('click', function(evt) {
           <div class="field">
             <label>Name</label>
             <div class="control">
-              <input type="text" data-rule="names" class="input">
+              <input type="text" data-rule="names" data-error-message="Name is required" class="input">
             </div>
           </div>
           <div class="field">
             <label>Email</label>
             <div class="control">
-              <input type="email" data-rule="email" class="input">
+              <input type="email" data-rule="email" data-error-message="Valid Email is required" class="input">
             </div>
           </div>
           <div class="field">
             <label>Phone</label>
             <div class="control">
-              <input type="text" data-rule="numbers" class="input">
+              <input type="text" data-rule="numbers" data-error-message="Phone is required" class="input">
             </div>
           </div>
           <div class="field">
             <label>Countries</label>
             <div class="control">
               <div class="select">
-                <select data-rule="required">
+                <select data-rule="required" data-error-message="Country is required">
                   <option value="">Select country</option>
                   <option value="China">China</option>
                   <option value="Peru">Peru</option>
@@ -226,12 +229,113 @@ action2.addEventListener('click', function(evt) {
           <div class="field">
             <label>Message</label>
             <div class="control">
-              <textarea class="textarea" data-rule="required"></textarea>
+              <textarea class="textarea" data-rule="required" data-error-message="Message is required"></textarea>
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <button type="submit" data-action="submit" class="button is-primary is-medium">Validate form</button>
+              <button type="submit" class="form__action button is-primary is-medium">Validate form</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr>
+    <h2 class="title is-3 has-text-centered">Adding custom rules</h2>
+    <div class="columns">
+      <div class="column is-half">
+        <p>If you need a custom rule (cellphone for example), you can write your own code and use the basic validations if you need. Place this before the rules object.</p>
+        <pre>
+          <code class="language-javascript">
+cmoFormValidate.rules.cellphone = function(val) {
+    return (val.length > 6 && val.length < 10) && cmoFormValidate.rules.numbers(val)
+}
+
+var options3 = {
+  form: '.form3',
+  button: '.form__action',
+  fields: [
+    {
+      selector: '.form__names',
+      rule: 'required',
+      message: 'Name is required'
+    },
+
+    {
+      selector: '.form__email',
+      rule: 'email',
+      message: 'Valid Email is required'
+    },
+
+    {
+      selector: '.form__phone',
+      rule: 'numbers',
+      message: 'Phone is required'
+    },
+
+    {
+      selector: '.form__cellphone',
+      rule: 'cellphone',
+      message: 'cellphone is required'
+    },
+
+    {
+      selector: '.form__message',
+      rule: 'required',
+      message: 'Message is required'
+    }
+  ]
+};
+
+cmoFormValidate.init(options3);
+
+var action1 = document.querySelector('.form3 .form__action');
+
+action1.addEventListener('click', function(evt) {
+  if (!cmoFormValidate.isValid('.form3')) {
+    evt.preventDefault();
+  } else {
+    alert('Nice!')
+  }
+});
+          </code>
+        </pre>
+      </div>
+      <div class="column is-half">
+        <form class="form3">
+          <div class="field">
+            <label>Name</label>
+            <div class="control">
+              <input type="text" class="form__names input">
+            </div>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <div class="control">
+              <input type="email" class="form__email input">
+            </div>
+          </div>
+          <div class="field">
+            <label>Phone</label>
+            <div class="control">
+              <input type="text" class="form__phone input">
+            </div>
+          </div>
+          <div class="field">
+            <label>Cellphone</label>
+            <div class="control">
+              <input type="text" class="form__cellphone input">
+            </div>
+          </div>
+          <div class="field">
+            <label>Message</label>
+            <div class="control">
+              <textarea class="form__message textarea"></textarea>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button type="submit" class="form__action button is-primary is-medium">Validate form</button>
             </div>
           </div>
         </form>
@@ -241,7 +345,7 @@ action2.addEventListener('click', function(evt) {
 
 	<script type="text/javascript" src="src/cmoFormValidate.js"></script>
 	<script type="text/javascript">
-	var rules = {
+	var options1 = {
 		form: '.form1',
 		button: '.form__action',
 		fields: [
@@ -277,9 +381,9 @@ action2.addEventListener('click', function(evt) {
 		]
 	};
 
-  cmoFormValidate.init(rules);
+  cmoFormValidate.init(options1);
 
-  var action1 = document.querySelector('.form__action');
+  var action1 = document.querySelector('.form1 .form__action');
 
   action1.addEventListener('click', function(evt) {
     if (!cmoFormValidate.isValid('.form1')) {
@@ -292,9 +396,14 @@ action2.addEventListener('click', function(evt) {
 
   /* With Data attributes */
 
-	cmoFormValidate.init('.form2');
+  var options2 = {
+    form: '.form2',
+    button: '.form__action',
+  };
 
-  var action2 = document.querySelector('[data-action]');
+  cmoFormValidate.init(options2);
+
+  var action2 = document.querySelector('.form2 .form__action');
 
   action2.addEventListener('click', function(evt) {
     if (!cmoFormValidate.isValid('.form2')) {
@@ -304,6 +413,60 @@ action2.addEventListener('click', function(evt) {
     }
   })
 
+
+  /* With Custom fields */
+
+  cmoFormValidate.rules.cellphone = function(val) {
+      return (val.length > 6 && val.length < 10) && cmoFormValidate.rules.numbers(val)
+  }
+
+  var options3 = {
+    form: '.form3',
+    button: '.form__action',
+    fields: [
+      {
+        selector: '.form__names',
+        rule: 'required',
+        message: 'Name is required'
+      },
+
+      {
+        selector: '.form__email',
+        rule: 'email',
+        message: 'Valid Email is required'
+      },
+
+      {
+        selector: '.form__phone',
+        rule: 'numbers',
+        message: 'Phone is required'
+      },
+
+      {
+        selector: '.form__cellphone',
+        rule: 'cellphone',
+        message: 'cellphone is required'
+      },
+
+      {
+        selector: '.form__message',
+        rule: 'required',
+        message: 'Message is required'
+      }
+    ]
+  };
+
+  cmoFormValidate.init(options3);
+
+  var action1 = document.querySelector('.form3 .form__action');
+
+  action1.addEventListener('click', function(evt) {
+    if (!cmoFormValidate.isValid('.form3')) {
+      evt.preventDefault();
+    } else {
+      alert('Nice!')
+    }
+  });
 	</script>
 
   <script type="text/javascript" src="vendors/js/prism.js"></script>
