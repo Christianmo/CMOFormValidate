@@ -4,7 +4,13 @@
  * version: 1.0.1
  */
 
-window.cmoFormValidate = (function() {
+(function(root, factory) {
+    if (typeof module === "object" && module.exports) {
+        module.exports = (root.cmoFormValidate = factory());
+    } else {
+        root.cmoFormValidate = factory();
+    }
+}(this, function() {
 
     'use strict';
 
@@ -160,5 +166,4 @@ window.cmoFormValidate = (function() {
         isValid: validate.isValid,
         rules: rules
     }
-
-})()
+}))
