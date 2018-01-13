@@ -29,10 +29,6 @@ window.cmoFormValidate = (function() {
 
         isInteger: function(val) {
             return parseInt(val) === Number(val);
-        },
-
-        isDNI: function(val) {
-            return parseInt(val) === Number(val) && val.trim().length === 8;
         }
     };
 
@@ -40,8 +36,7 @@ window.cmoFormValidate = (function() {
         names: validations.isName,
         email: validations.isEmail,
         numbers: validations.isInteger,
-        required: validations.isNotEmpty,
-        dni: validations.isDNI,
+        required: validations.isNotEmpty
     };
 
     var validate = {
@@ -49,11 +44,10 @@ window.cmoFormValidate = (function() {
         init: function(data) {
 
             options = data;
+            var form = document.querySelector(options.form);
+            var button = form.querySelector(options.button);
 
             if (options.fields) {
-                var form = document.querySelector(options.form);
-                var button = form.querySelector(options.button);
-
                 var fieldsArr = options.fields.map(function(fieldObj) {
                     return {
                         el: form.querySelector(fieldObj.selector),
@@ -62,11 +56,7 @@ window.cmoFormValidate = (function() {
                     };
                 });
             } else {
-                var selector = options;
-                var form = document.querySelector(options.form);
-                var button = form.querySelector(options.button);
                 var inputs = form.querySelectorAll("[data-rule]");
-
                 var fieldsArr = Array.prototype.map.call(inputs, function(input) {
                     return {
                         el: input,
