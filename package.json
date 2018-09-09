@@ -2,7 +2,7 @@
   "name": "cmoformvalidate",
   "version": "1.0.0",
   "description": "Ligth Validation Library",
-  "main": "index.js",
+  "main": "src/cmoFormValidate.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "minify": "uglifyjs ./src/cmoFormValidate.js -c -o ./src/cmoFormValidate.min.js"

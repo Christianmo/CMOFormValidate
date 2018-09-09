@@ -128,7 +128,7 @@
             form.addEventListener('submit', function(evt) {
                 evt.preventDefault();
 
-                fields.forEach(function(fieldObj) {
+                fieldsArr.forEach(function(fieldObj) {
                     self._errorHandle(fieldObj.el, fieldObj.rule, fieldObj.errorMessage);
                 });
             });
