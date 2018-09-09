@@ -1,6 +1,6 @@
 {
   "name": "cmoformvalidate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Ligth Validation Library",
   "main": "src/cmoFormValidate.js",
   "scripts": {
