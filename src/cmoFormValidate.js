@@ -1,17 +1,12 @@
-/**
- * CMO Form Validate
- * author: Christian Montenegro
- * version: 1.0.1
- */
-
-(function(root, factory) {
-    if (typeof module === "object" && module.exports) {
-        module.exports = (root.cmoFormValidate = factory());
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else if (typeof module === 'object' && module.exports) {
+      module.exports = factory();
     } else {
-        root.cmoFormValidate = factory();
+      root.cmoFormValidate = factory();
     }
 }(this, function() {
-
     'use strict';
 
     var fields = [];
