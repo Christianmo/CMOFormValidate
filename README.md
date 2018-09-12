@@ -4,4 +4,4 @@ Basic JS form validation library.
 
 `npm i cmoformvalidate`
 
-For more details see [the proyect website](https://christianmo.github.io/CMOFormValidate/).
+For more details and documentation see [the proyect website](https://christianmo.github.io/cmoFormValidate/).
